@@ -1,32 +1,43 @@
 # Script generated with Bloom
-pkgdesc="ROS - @(Description)"
-@[if Homepage and Homepage != '']url='@(Homepage)'@[end if]
+pkgdesc="ROS - The OSG Bullet library adapted to UWSim. See https://code.google.com/p/osgbullet"
 
-pkgname='@(Package)'
-pkgver='@(Version)_@(Pkgrel)'
+
+pkgname='ros-kinetic-uwsim-osgbullet'
+pkgver='3.0.1_1'
 pkgrel=1
 arch=('any')
-license=(@[for p in Licenses]'@p'@\n@[end for])
+license=('LGPL'
+)
 
-makedepends=(@[for p in BuildDepends]'@p'@\n@[end for])
+makedepends=('boost'
+'cmake'
+'openscenegraph'
+'ros-kinetic-uwsim-bullet'
+'ros-kinetic-uwsim-osgworks'
+)
 
-depends=(@[for p in Depends]'@p'@\n@[end for])
+depends=('boost'
+'openscenegraph'
+'ros-kinetic-catkin'
+'ros-kinetic-uwsim-bullet'
+'ros-kinetic-uwsim-osgworks'
+)
 
-conflicts=(@[for p in Conflicts]'@p'@\n@[end for])
-replaces=(@[for p in Replaces]'@p'@\n@[end for])
+conflicts=()
+replaces=()
 
-_dir=@(Name)
+_dir=uwsim_osgbullet
 source=()
 md5sums=()
 
 prepare() {
-    cp -R $startdir/@(Name) $srcdir/@(Name)
+    cp -R $startdir/uwsim_osgbullet $srcdir/uwsim_osgbullet
 }
 
 build() {
   # Use ROS environment variables
   source /usr/share/ros-build-tools/clear-ros-env.sh
-  [ -f /opt/ros/@(ROSDistribution)/setup.bash ] && source /opt/ros/@(ROSDistribution)/setup.bash
+  [ -f /opt/ros/kinetic/setup.bash ] && source /opt/ros/kinetic/setup.bash
 
   # Create build directory
   [ -d ${srcdir}/build ] || mkdir ${srcdir}/build
@@ -39,7 +50,7 @@ build() {
   cmake ${srcdir}/${_dir} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCATKIN_BUILD_BINARY_PACKAGE=ON \
-        -DCMAKE_INSTALL_PREFIX=/opt/ros/@(ROSDistribution) \
+        -DCMAKE_INSTALL_PREFIX=/opt/ros/kinetic \
         -DPYTHON_EXECUTABLE=/usr/bin/python2 \
         -DPYTHON_INCLUDE_DIR=/usr/include/python2.7 \
         -DPYTHON_LIBRARY=/usr/lib/libpython2.7.so \
